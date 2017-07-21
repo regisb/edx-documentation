@@ -5204,7 +5204,7 @@ Calendar Tool` or :ref:`partnercoursestaff:Google Drive Files Tool`.
 
 
 ``edx.googlecomponent.calendar.displayed``
-++++++++++++++++++++++++++++++++++++++++++
+******************************************
 
 The server emits an ``edx.googlecomponent.calendar.displayed`` event when a
 Google Calendar component is shown in the LMS.
@@ -5235,7 +5235,7 @@ Google Calendar component is shown in the LMS.
 
 
 ``edx.googlecomponent.document.displayed``
-++++++++++++++++++++++++++++++++++++++++++
+******************************************
 
 The server emits an ``edx.googlecomponent.document.displayed`` event when a
 Google Drive file, such as a document, spreadsheet, or image, is shown in the
@@ -5271,7 +5271,7 @@ For more information about adding Oppia explorations to a course, see
 :ref:`partnercoursestaff:Oppia Exploration Tool`.
 
 ``oppia.exploration.completed``
-++++++++++++++++++++++++++++++++++++++++++
+******************************************
 
 The server emits an ``oppia.exploration.completed`` event when a user completes
 an interaction with an Oppia exploration component. Oppia explorations do not
@@ -5292,7 +5292,7 @@ for the ``oppia.exploration.state.changed`` events.
 
 
 ``oppia.exploration.loaded``
-++++++++++++++++++++++++++++++++++++++++++
+******************************************
 
 The server emits an ``oppia.exploration.loaded`` event when an Oppia
 exploration component is shown in the LMS.
@@ -5312,7 +5312,7 @@ fields. These fields serve the same purpose for events of this type as for the
 
 
 ``oppia.exploration.state.changed``
-++++++++++++++++++++++++++++++++++++++++++
+******************************************
 
 The server emits an ``oppia.exploration.state.changed`` event when a user
 interacts with an Oppia exploration component by submitting an answer. Answers
@@ -5364,7 +5364,7 @@ For more information about adding mixes to a course, see
 :ref:`partnercoursestaff:Office Mix Tool`.
 
 ``microsoft.office.mix.loaded``
-++++++++++++++++++++++++++++++++++++++++++
+******************************************
 
 The server emits a ``microsoft.office.mix.loaded`` event when a mix is fully
 loaded and ready to play in the Office Mix player in the LMS.
@@ -5394,7 +5394,7 @@ loaded and ready to play in the Office Mix player in the LMS.
        "https://mix.office.com/embed/10g8h9rvi1yg8".
 
 ``microsoft.office.mix.paused``
-++++++++++++++++++++++++++++++++++++++++++
+******************************************
 
 The server emits a ``microsoft.office.mix.paused`` event when a user selects
 **pause** for an Office Mix.
@@ -5431,7 +5431,7 @@ The following additional ``event`` member fields apply specifically to
 
 
 ``microsoft.office.mix.played``
-++++++++++++++++++++++++++++++++++++++++++
+******************************************
 
 The server emits a ``microsoft.office.mix.played`` event when a user selects
 **play** for an Office Mix.
@@ -5452,7 +5452,7 @@ for the ``microsoft.office.mix.paused`` events.
 
 
 ``microsoft.office.mix.slide.loaded``
-++++++++++++++++++++++++++++++++++++++++++
+******************************************
 
 The server emits a ``microsoft.office.mix.slide.loaded`` event each time the
 Office Mix player changes the slide that is presented to the user.
@@ -5481,7 +5481,7 @@ The following additional ``event`` member field applies specifically to
 
 
 ``microsoft.office.mix.stopped``
-++++++++++++++++++++++++++++++++++++++++++
+******************************************
 
 The server emits an ``microsoft.office.mix.stopped`` event when the Office Mix
 player reaches the end of a mix and automatically stops.
@@ -5546,8 +5546,9 @@ courses, see :ref:`partnercoursestaff:Add Content Experiments to Your Course`.
 
 **History**: These events were added on 12 Mar 2014.
 
+=================================================
 ``xmodule.partitions.assigned_user_to_partition``
-+++++++++++++++++++++++++++++++++++++++++++++++++++
+=================================================
 
 When a student views a module that is set up to test different child modules,
 the server checks the ``user_api_usercoursetag`` table for the student's
@@ -5593,8 +5594,9 @@ If the student does not yet have an assignment, the server emits an
      - string
      - Name of the partition.
 
+=================================================
 ``xblock.split_test.child_render``
-+++++++++++++++++++++++++++++++++++++++++++++++++++
+=================================================
 
 When a student views a module that is set up to test different content using
 child modules, the server emits a ``xblock.split_test.child_render`` event to
