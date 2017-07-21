@@ -94,14 +94,8 @@ D, E, F
      - :ref:`enrollment`
    * - ``edx.course.enrollment.upgrade.succeeded``
      - :ref:`enrollment`
-   * - ``edx.course.home.course_update.toggled``
-     -
-   * - ``edx.course.home.resume_course.clicked``
-     -
-   * - ``edx.course.home.upgrade_verified.clicked``
-     -
    * - ``edx.course.tool.accessed``
-     -
+     - :ref:`course_resources`
    * - ``edx.course.student_notes.added``
      - :ref:`notes`
    * - ``edx.course.student_notes.deleted``
