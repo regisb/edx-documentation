@@ -1,4 +1,4 @@
-.. The contents of this file are now included in course_team_event_types.rst and this file is no longer used in an include directive in tracking_logs.rst
+.. The contents of this file are now included in course_team_event_types.rst and student_event_types.rst. This file is no longer used in an include directive in tracking_logs.rst
 
 Special exams are a type of course exam that includes timed exams, proctored
 exams, and practice proctored exams. These exam types offer more complicated
