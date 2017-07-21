@@ -1,373 +1,3 @@
-.. _Tracking Logs:
-
-############################################
-Events in the Tracking Logs
-############################################
-
-This section provides reference information about the event data that is
-delivered in data packages. Events are emitted by the server, the browser, or
-the mobile device to capture information about interactions with a course in
-the LMS and are stored in JSON documents. In the data package, event data is
-delivered in a log file.
-
-.. contents::
-  :local:
-  :depth: 1
-
-The student and course team events are grouped into categories in this section.
-For a complete, alphabetical list of events, see the :ref:`event_list`.
-
-.. _sample_events:
-
-*************************
-Reviewing a Sample Event
-*************************
-
-A sample event from an edX.log file follows. This sample was edited to remove
-personally identifiable information. Events are stored in JSON documents, which
-can be difficult to read before standard formatting is applied. If you use a
-JSON formatter to "pretty print" this event, a version that is more readable is
-produced.
-
-.. code-block:: json
-
- {
-   "username": "staff",
-   "event_type": "problem_check",
-   "ip": "10.0.1.1",
-   "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
-   "host": "precise64",
-   "referer": "http://localhost:8000/courses/course-v1:edX+DemoX+Demo_Course/courseware/d8a6192ade314473a78242dfeedfbf5b/330cf4d0c87b4bddbbd2eb4a466ff9f4/1?activate_block_id=block-v1%3AedX%2BDemoX%2BDemo_Course%2Btype%40vertical%2Bblock%40541e3597470c4c0d8ab11f6ac443fd5d",
-   "accept_language": "en;q=1.0, en;q=0.8",
-   "event": {
-     "submission": {
-       "29c5cbd840324d94be8ba51db1864277_2_1": {
-         "input_type": "checkboxgroup",
-         "question": "Which of the following is a fruit?",
-         "response_type": "choiceresponse",
-         "answer": [
-           "apple\n      <choicehint selected=\"true\">You are correct that an apple is a fruit because it is the fertilized ovary that comes from an apple tree and contains seeds.</choicehint>\n      <choicehint selected=\"false\">Remember that an apple is also a fruit.</choicehint>\n"
-         ],
-         "variant": "",
-         "correct": false
-       }
-     },
-     "success": "incorrect",
-     "grade": 0,
-     "correct_map": {
-       "29c5cbd840324d94be8ba51db1864277_2_1": {
-         "hint": "",
-         "hintmode": null,
-         "correctness": "incorrect",
-         "npoints": null,
-         "answervariable": null,
-         "msg": "<div class=\"feedback-hint-incorrect\"><div class=\"hint-label\">Incorrect: </div><div class=\"feedback-hint-multi\"><div class=\"hint-text\">You are correct that an apple is a fruit because it is the fertilized ovary that comes from an apple tree and contains seeds.</div><div class=\"hint-text\">Remember that a pumpkin is also a fruit.</div><div class=\"hint-text\">You are correct that a potato is a vegetable because it is an edible part of a plant in tuber form.</div><div class=\"hint-text\">Many people mistakenly think a tomato is a vegetable. However, because a tomato is the fertilized ovary of a tomato plant and contains seeds, it is a fruit.</div></div></div>",
-         "queuestate": null
-       }
-     },
-     "state": {
-       "student_answers": {
-
-       },
-       "seed": 1,
-       "done": null,
-       "correct_map": {
-
-       },
-       "input_state": {
-         "29c5cbd840324d94be8ba51db1864277_2_1": {
-
-         }
-       }
-     },
-     "answers": {
-       "29c5cbd840324d94be8ba51db1864277_2_1": [
-         "choice_0"
-       ]
-     },
-     "attempts": 1,
-     "max_grade": 1,
-     "problem_id": "block-v1:edX+DemoX+Demo_Course+type@problem+block@29c5cbd840324d94be8ba51db1864277"
-   },
-   "event_source": "server",
-   "context": {
-     "course_user_tags": {
-
-     },
-     "user_id": 3,
-     "org_id": "edX",
-     "asides": {
-
-     },
-     "module": {
-       "usage_key": "block-v1:edX+DemoX+Demo_Course+type@problem+block@29c5cbd840324d94be8ba51db1864277",
-       "display_name": "Checkboxes with Hints and Feedback"
-     },
-     "course_id": "course-v1:edX+DemoX+Demo_Course",
-     "path": "/courses/course-v1:edX+DemoX+Demo_Course/xblock/block-v1:edX+DemoX+Demo_Course+type@problem+block@29c5cbd840324d94be8ba51db1864277/handler/xmodule_handler/problem_check"
-   },
-   "time": "2016-08-04T13:43:34.967980+00:00",
-   "page": "x_module"
- }
-
-For more information about fields that are included in every event, see
-:ref:`common`. For more information about this ``problem_check`` event and
-other types of events, see :ref:`Student_Event_Types` or
-:ref:`Instructor_Event_Types`.
-
-.. _common:
-
-*****************************
-Common Fields
-*****************************
-
-This section describes the JSON fields that are common to the schema
-definitions of all events. These fields are at the root level of the event
-JSON documents.
-
-This section presents the common fields in alphabetical order. Actual events
-in your data package can include these fields in different sequences.
-
-===========================
-``accept_language`` Field
-===========================
-
-**Type:** string
-
-**Details:** The value from the HTTP Accept-Language request-header field. For
-more information, see the HTTP/1.1 header field definition for
-`Accept-Language`_.
-
-**History:** Added 23 Feb 2015.
-
-=====================
-``agent`` Field
-=====================
-
-**Type:** string
-
-**Details:** Browser agent string of the user who triggered the event.
-
-.. _context:
-
-===================
-``context`` Field
-===================
-
-**Type:** object
-
-**Details:**
-
-The ``context`` field includes member fields that provide contextual
-information.
-
-* This field contains a core set of member fields that are common to all
-  events.
-* For certain events with additional contextual requirements, this field
-  contains a set of additional member fields that are common to those events
-  only.
-* For any event, this field can also include one or more additional member
-  fields. For more information about the ``context`` member fields for an
-  event, see the description of that event later in this section.
-
-``context`` Member Fields Common to All Events
-***********************************************
-
-The following member fields are present in the ``context`` field for all
-events.
-
-.. list-table::
-   :widths: 15 15 60
-   :header-rows: 1
-
-   * - ``context`` Member Field
-     - Type
-     - Details
-   * - ``course_id``
-     - string
-     - Identifies the course that generated the event.
-   * - ``org_id``
-     - string
-     - The organization that lists the course.
-   * - ``path``
-     - string
-     - The URL that generated the event.
-   * - ``user_id``
-     - number
-     - Identifies the individual who is performing the action.
-
-.. note:: Occasionally, an event is recorded with a missing or blank
- ``context.user_id`` value. This can occur when a user logs out, or the login
- session times out, while a browser window remains open. Subsequent actions are
- logged, but the system cannot supply the user identifier. EdX recommends that
- you ignore these events during analysis.
-
-``context`` Member Fields for Applicable Events
-******************************************************
-
-When applicable for an event, the ``context`` field also includes these member
-fields to provide additional information.
-
-.. list-table::
-   :widths: 15 15 60
-   :header-rows: 1
-
-   * - ``context`` Member Field
-     - Type
-     - Details
-   * - ``course_user_tags``
-     - object
-     - Contains the key(s) and value(s) from the ``user_api_usercoursetag``
-       table for the user. See :ref:`user_api_usercoursetag`.
-   * - ``module``
-     - object
-     - Provides identifying information for the components involved in a
-       server event.
-
-       For example, in a server ``problem_check`` event, the ``module`` field
-       indicates the problem component that the server checked successfully.
-       The member fields are ``display_name`` and ``usage_key``.
-
-       For modules that are used in a course to present content from a
-       library, ``module`` also includes the ``original_usage_key`` and
-       ``original_usage_version`` fields. These member fields provide a
-       consistent way to identify components that are sourced from a library,
-       and can be used to identify the source library.
-
-
-The ``context`` member fields are blank if values cannot be determined.
-
-**History**: ``usage_key`` added 28 Jan 2015. ``path`` added 07 May 2014.
-``course_user_tags`` added 12 Mar 2014. ``user_id`` added 6 Nov 2013. Other
-event fields may duplicate this data. Added 23 Oct 2013.
-
-===================
-``event`` Field
-===================
-
-**Type:** object
-
-**Details:** This field includes member fields that identify specifics of each
-triggered event. Different member fields are supplied for different events.
-For more information about the ``event`` member fields for an event, see the
-description of that event later in this section.
-
-========================
-``event_source`` Field
-========================
-
-**Type:** string
-
-**Details:** Specifies the source of the interaction that triggered the event.
-The values in this field are:
-
-* 'browser'
-* 'mobile'
-* 'server'
-* 'task'
-
-**History**: Updated 16 Oct 2014 to identify events emitted from mobile
-devices.
-
-=====================
-``event_type`` Field
-=====================
-
-**Type:** string
-
-**Details:** The type of event triggered. Values depend on ``event_source``.
-
-:ref:`Student_Event_Types` and :ref:`Instructor_Event_Types` later in this
-section provide descriptions of each type of event that is included in
-data packages. To locate information about a specific event type, see the
-:ref:`event_list`.
-
-===================
-``host`` Field
-===================
-
-**Type:** string
-
-**Details:** The site visited by the user, for example, ``courses.edx.org``.
-
-===================
-``ip`` Field
-===================
-
-**Type:** string
-
-**Details:** IP address of the user who triggered the event. Empty for events
-that originate on mobile devices.
-
-===================
-``name`` Field
-===================
-
-**Type:** string
-
-**Details:** Identifies the type of event triggered.
-
-**History:** Server and mobile events added beginning on 07 May 2014 include a
-``name`` field. When this field is present for an event, it supersedes the
-``event_type`` field.
-
-===================
-``page`` Field
-===================
-
-**Type:** string
-
-**Details:** The '$URL' of the page the user was visiting when the event was
-emitted.
-
-For video events that originate on mobile devices, identifies the URL for the
-video component.
-
-===================
-``referer`` Field
-===================
-
-**Type:** string
-
-**Details:** The URI from the HTTP Referer request-header field. For more
-information, see the HTTP/1.1 header field definition for `Referer`_.
-
-**History:** Added 23 Feb 2015.
-
-===================
-``session`` Field
-===================
-
-**Type:** string
-
-**Details:** This 32-character value is a key that identifies the user's
-session. All browser events and the server :ref:`enrollment<enrollment>` events
-include a value for the session. Other server events and mobile events do not
-include a session value.
-
-===================
-``time`` Field
-===================
-
-**Type:** string
-
-**Details:** Gives the UTC time at which the event was emitted in
-'YYYY-MM-DDThh:mm:ss.xxxxxx' format.
-
-===================
-``username`` Field
-===================
-
-**Type:** string
-
-**Details:** The username of the user who caused the event to be emitted.
-
-.. note:: Occasionally, an event is recorded with a blank ``username``
- value. This can occur when a user logs out, or the login session times out,
- while a browser window remains open. Subsequent actions are logged, but the
- system cannot supply the user identifier. EdX recommends that you ignore these
- events during analysis.
-
 .. _Student_Event_Types:
 
 ****************************************
@@ -3215,10 +2845,379 @@ field.
      - string
      - EdX ID of the problem being shown.
 
-.. Including the special exam (timed and proctored) events doc in a separate
-.. file because it is very long. - Peter March 2016
 
-.. include:: special_exam_events.rst
+.. Pasting in the actual contents of previously included special_exam_events.rst after breaking up course team and student events into separate files.
+
+.. OLD.. Including the special exam (timed and proctored) events doc in a separate file because it is very long. - Peter March 2016
+
+.. _special_exam_events:
+
+=================================
+Timed and Proctored Exam Events
+=================================
+
+Special exams are a type of course exam that includes timed exams, proctored
+exams, and practice proctored exams. These exam types offer more complicated
+functionality than other assignment types in graded subsections, and they emit
+additional events. Special exam events provide information about special exams
+included in courses and learners' interactions with those special exams.
+
+* Proctored exams have a time limit and they require learners to install and
+  run monitoring software while taking the exam. After a learner completes a
+  proctored exam, a team of reviewers determines whether the learner complied
+  with all of the exam rules based on records generated by the monitoring
+  software.
+
+* Practice proctored exams allow learners to become familiar with the
+  monitoring software that they will use during an actual proctored exam. The
+  way that a learner experiences a practice proctored exam is identical to a
+  proctored exam. In a practice proctored exam, the monitoring software does
+  not send exam records to reviewers.
+
+* Timed exams have a time limit. Learners do not install or use monitoring
+  software when they take a timed exam.
+
+Practice proctored exams follow a workflow that is similar to proctored exams
+but do not include a review of the exam attempt. Timed exams also follow a
+similar workflow but do not include any proctoring software or review of the
+exam attempt.
+
+The following diagram shows the workflow for a proctored exam.
+
+.. image:: ../../../../shared/images/proctored-exam-process.png
+  :width: 500
+  :alt: A diagram showing the workflow for a proctored exam.
+
+For more information about timed exams and proctored exams, see
+:ref:`partnercoursestaff:Timed Exams` and
+:ref:`partnercoursestaff:CA_ProctoredExams_Overview`.
+
+Some special exam events are emitted when course teams develop and administer
+exams. For more information, see :ref:`special_exam_development_events`.
+
+Because special exams include similar functions and behavior, they share some
+similar events. For example, the
+``edx.special_exam.proctored.allowance.created``,
+``edx.special_exam.practice.allowance.created``, and
+``edx.special_exam.timed.allowance.created`` events include identical fields.
+
+This section includes descriptions of the following events.
+
+.. contents::
+  :local:
+  :depth: 1
+
+.. _special_exam_attempt_created:
+
+``edx.special_exam.proctored.attempt.created``, ``edx.special_exam.practice.attempt.created``, and ``edx.special_exam.timed.attempt.created``
+************************************************************************************************************************************************
+
+The server emits this event when a learner chooses to take a special exam.
+
+**History**: Added 01 Dec 2015.
+
+``event`` **Member Fields**:
+
+.. list-table::
+   :widths: 15 15 60
+   :header-rows: 1
+
+   * - Field
+     - Type
+     - Details
+   * - ``attempt_allowed_time_limit_mins``
+     - number
+     - The amount of time, in minutes, that the learner has to complete
+       the exam.
+   * - ``attempt_code``
+     - string
+     - A generated identifier for the exam attempt.
+   * - ``attempt_completed_at``
+     - datetime
+     - The UTC time stamp of the time at which the learner submitted the
+       exam.
+   * - ``attempt_event_elapsed_time_secs``
+     - number
+     - The number of seconds that passed between the time the learner started
+       the exam and the time the event was emitted.
+   * - ``attempt_id``
+     - number
+     - The primary identifier of the exam attempt.
+   * - ``attempt_started_at``
+     - datetime
+     - The UTC time stamp of the time at which the learner began taking the
+       exam.
+   * - ``attempt_status``
+     - string
+     - The current state of the exam, for example, ``created``.
+   * - ``attempt_user_id``
+     - number
+     - The primary identifier of the learner taking the exam.
+   * - ``exam_content_id``
+     - string
+     - The primary identifier of the subsection that contains the exam.
+   * - ``exam_default_time_limit_mins``
+     - number
+     - The standard amount of time, in minutes, that learners have to complete
+       the exam.
+   * - ``exam_id``
+     - number
+     - The primary identifier of the exam.
+   * - ``exam_is_active``
+     - Boolean
+     - Indicates whether the special exam is currently available for learner
+       attempts.
+   * - ``exam_is_practice_exam``
+     - Boolean
+     - Indicates whether the special exam is a practice proctored exam.
+   * - ``exam_is_proctored``
+     - Boolean
+     - Indicates whether the special exam is a proctored exam.
+   * - ``exam_name``
+     - string
+     - The title of the exam in the course page, taken from the subsection
+       title.
+
+
+``edx.special_exam.proctored.attempt.declined``
+***********************************************
+
+The server emits this event when a learner chooses to take an exam without
+proctoring.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.proctored.attempt.created`` event. For more information,
+see
+:ref:`special_exam_attempt_created`.
+
+**History**: Added 01 Dec 2015.
+
+.. _special_exam_attempt_deleted:
+
+``edx.special_exam.proctored.attempt.deleted``, ``edx.special_exam.practice.attempt.deleted``, and ``edx.special_exam.timed.attempt.deleted``
+*********************************************************************************************************************************************
+
+The server emits this event when a course team or edX platform administrator
+removes an exam attempt record for an individual learner.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.{special exam type}.attempt.created`` event. For more
+information, see
+:ref:`special_exam_attempt_created`.
+
+**History**: Added 01 Dec 2015.
+
+.. _special_exam_attempt_download_software_clicked:
+
+``edx.special_exam.proctored.attempt.download_software_clicked`` and ``edx.special_exam.practice.attempt.download_software_clicked``
+************************************************************************************************************************************
+
+The server emits this event when a learner follows the link to download the
+proctoring software for a proctored exam.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.{special exam type}.attempt.created`` event. For more information,
+see
+:ref:`special_exam_attempt_created`.
+
+**History**: Added 01 Dec 2015.
+
+.. _special_exam_attempt_error:
+
+``edx.special_exam.proctored.attempt.error`` and ``edx.special_exam.practice.attempt.error``
+********************************************************************************************
+
+The server emits this event when it loses the connection to the proctoring
+software during a learner's exam attempt.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.{special exam type}.attempt.created`` event. For more
+information, see
+:ref:`special_exam_attempt_created`.
+
+**History**: Added 01 Dec 2015.
+
+.. _special_exam_attempt_ready_to_start:
+
+``edx.special_exam.proctored.attempt.ready_to_start`` and ``edx.special_exam.practice.attempt.ready_to_start``
+**************************************************************************************************************
+
+The server emits this event when a learner has installed the proctoring
+software and is ready to begin taking a proctored exam.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.{special exam type}.attempt.created`` event. For more
+information, see
+:ref:`special_exam_attempt_created`.
+
+**History**: Added 01 Dec 2015.
+
+.. _special_exam_attempt_ready_to_submit:
+
+``edx.special_exam.proctored.attempt.ready_to_submit``, ``edx.special_exam.practice.attempt.ready_to_submit``, and ``edx.special_exam.timed.attempt.ready_to_submit``
+*********************************************************************************************************************************************************************
+
+The server emits this event when a learner has completed a proctored exam and
+is prompted to submit the exam.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.{special exam type}.attempt.created`` event. For more
+information, see
+:ref:`special_exam_attempt_created`.
+
+**History**: Added 01 Dec 2015.
+
+``edx.special_exam.proctored.attempt.rejected``
+***********************************************
+
+The server emits this event when a proctored exam attempt has been reviewed and
+has been disqualified.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.proctored.attempt.created`` event. For more information,
+see
+:ref:`special_exam_attempt_created`.
+
+**History**: Added 01 Dec 2015.
+
+``edx.special_exam.proctored.attempt.review_received``
+******************************************************
+
+The server emits this event when a proctored exam attempt has been reviewed and
+the results of the review are available.
+
+**History**: Added 01 Dec 2015.
+
+``event`` **Member Fields**:
+
+.. list-table::
+   :widths: 15 15 60
+   :header-rows: 1
+
+   * - Field
+     - Type
+     - Details
+   * - ``attempt_allowed_time_limit_mins``
+     - number
+     - The amount of time, in minutes, that the learner has to complete
+       the exam.
+   * - ``attempt_code``
+     - string
+     - A generated identifier for the exam attempt.
+   * - ``attempt_completed_at``
+     - datetime
+     - The UTC time stamp of the time at which the learner submitted the
+       exam.
+   * - ``attempt_event_elapsed_time_secs``
+     - number
+     - The number of seconds that passed between the time the learner started
+       the exam and the time the event was emitted.
+   * - ``attempt_id``
+     - number
+     - The primary identifier of the exam attempt.
+   * - ``attempt_started_at``
+     - datetime
+     - The UTC time stamp of the time at which the learner began taking the
+       exam.
+   * - ``attempt_status``
+     - string
+     - The current state of the exam, for example, ``created``.
+   * - ``attempt_user_id``
+     - number
+     - The primary identifier of the learner taking the exam.
+   * - ``exam_content_id``
+     - string
+     - The primary identifier of the subsection that contains the exam.
+   * - ``exam_default_time_limit_mins``
+     - number
+     - The standard amount of time, in minutes, that learners have to complete
+       the exam.
+   * - ``exam_id``
+     - number
+     - The primary identifier of the exam.
+   * - ``exam_name``
+     - string
+     - The title of the exam in the course page, taken from the subsection
+       title.
+   * - ``exam_is_active``
+     - Boolean
+     - Indicates whether the special exam is currently available for learner
+       attempts.
+   * - ``exam_is_practice_exam``
+     - Boolean
+     - Indicates whether the special exam is a practice proctored exam.
+   * - ``exam_is_proctored``
+     - Boolean
+     - Indicates whether the special exam is a proctored exam.
+   * - ``review_attempt_code``
+     - string
+     - A generated identifier for the review of the exam attempt.
+   * - ``review_status``
+     - string
+     - The result of the review. Values include ``Clean``, ``Suspicious``, and
+       ``Rules Violation``.
+   * - ``review_video_url``
+     - string
+     - The URL of the proctored exam record.
+
+.. _special_exam_attempt_started:
+
+``edx.special_exam.proctored.attempt.started``, ``edx.special_exam.practice.attempt.started``, and ``edx.special_exam.timed.attempt.started``
+*********************************************************************************************************************************************
+
+The server emits this event when a learner begins taking a proctored exam.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.{special exam type}.attempt.created`` event. For more
+information, see
+:ref:`special_exam_attempt_created`.
+
+**History**: Added 01 Dec 2015.
+
+.. _special_exam_attempt_submitted:
+
+``edx.special_exam.proctored.attempt.submitted``, ``edx.special_exam.practice.attempt.submitted``, and ``edx.special_exam.timed.attempt.submitted``
+***************************************************************************************************************************************************
+
+The server emits this event when a learner completes a proctored exam and
+submits it for grading and review.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.{special exam type}.attempt.created`` event. For more
+information, see
+:ref:`special_exam_attempt_created`.
+
+**History**: Added 01 Dec 2015.
+
+``edx.special_exam.proctored.attempt.verified``
+***********************************************
+
+The server emits this event when the review of a proctored exam is complete and
+the exam attempt is approved.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.proctored.attempt.created`` event. For more information,
+see
+:ref:`special_exam_attempt_created`.
+
+**History**: Added 01 Dec 2015.
+
+
+
+``edx.special_exam.proctored.option-presented``
+***********************************************
+
+The server emits this event when a learner views the starting page of a
+proctored exam. The starting page presents a link that learners can follow to
+begin taking the proctored exam.
+
+The ``event`` fields for this event are the same as the ``event`` fields for
+the ``edx.special_exam.proctored.created`` event. For more information, see
+:ref:`special_exam_created`.
+
+**History**: Added 01 Dec 2015.
+
+
 
 
 .. _bookmark_events:
@@ -5087,7 +5086,6 @@ indicates whether the event was emitted by the client or the server.
        associated content) and ``false`` (a learner has not completed the
        associated content).
 
-
 .. _content:
 
 ===========================
@@ -6409,754 +6407,5 @@ and ``staff_grading_show_problem``.
      - string
      - The location of the question whose prompt is being shown or hidden.
 
-.. _Instructor_Event_Types:
 
-*************************
-Course Team Events
-*************************
-
-This section lists events that are generated by interactions with options on
-the instructor dashboard. Users who have the Admin or Staff role can select
-**Instructor** in the LMS to access the instructor dashboard.
-
-The schema definitions for events include only the JSON fields that are common
-to all events follow.
-
-* ``dump-answer-dist-csv``
-* ``dump-graded-assignments-config``
-* ``dump-grades``
-* ``dump-grades-csv``
-* ``dump-grades-csv-raw``
-* ``dump-grades-raw``
-* ``list-beta-testers``
-* ``list-instructors``
-* ``list-staff``
-* ``list-students``
-
-**Event Source**: Server
-
-For more information about the common fields, see :ref:`common`.
-
-Course team events that have additional ``context`` or ``event`` member fields
-follow.
-
-.. contents::
-  :local:
-  :depth: 1
-
-======================================================
-``add-instructor`` and ``remove-instructor``
-======================================================
-
-.. previously a comma-separated list; "Rows identical after the second column" (which means the name and description columns) were combined
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 40 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-   * - ``instructor``
-     - string
-
-
-.. _rescore_student:
-
-===================================================================
- ``delete-student-module-state`` and ``rescore-student-submission``
-===================================================================
-
-.. previously a comma-separated list; "Rows identical after the second column" (which means the name and description columns) were combined
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 40 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-   * - ``course``
-     - string
-   * - ``problem``
-     - string
-   * - ``student``
-     - string
-
-.. _edx.instructor.report.downloaded:
-
-======================================================
-``edx.instructor.report.downloaded``
-======================================================
-
-The browser emits an  ``edx.instructor.report.downloaded`` event when the user
-selects a report link on the instructor dashboard to download a report.
-
-**History**: Added 8 May 2015.
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Browser
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 20 20 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-     - Details
-   * - ``report_url``
-     - string
-     - The URL to the report file.
-
-.. _edx.instructor.report.requested:
-
-======================================================
-``edx.instructor.report.requested``
-======================================================
-
-The server emits an  ``edx.instructor.report.requested`` event when the user
-clicks to request the generation of a report on the instructor dashboard.
-
-**History**: Added 8 May 2015.
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 20 20 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-     - Details
-   * - ``report_type``
-     - string
-     - The type of report that was requested.
-
-
-.. _progress:
-
-======================================================
-``get-student-progress-page``
-======================================================
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 40 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-   * - ``course``
-     - string
-   * - ``instructor``
-     - string
-   * - ``student``
-     - string
-
-
-.. _rescore_all:
-
-======================================================
-``rescore-all-submissions`` and ``reset-all-attempts``
-======================================================
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 40 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-   * - ``course``
-     - string
-   * - ``problem``
-     - string
-
-
-.. _reset_attempts:
-
-======================================================
-``reset-student-attempts``
-======================================================
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 40 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-   * - ``course``
-     - string
-   * - ``old_attempts``
-     - string
-   * - ``problem``
-     - string
-   * - ``student``
-     - string
-
-
-.. _grading_events:
-
-=============================
-Grading-Related Events
-=============================
-
-Grading-related events are emitted when grades at the subsection or course
-level are updated. Changes to grades can result from a learner action such as
-submitting a response to a problem, a course team member action on the
-Instructor Dashboard such as rescoring a problem or deleting a learner's state
-for a problem, or a course-level action such as calculation of a learner's
-final grade for a course.
-
-This section presents grading-related events alphabetically.
-
-**Component**: LMS, Instructor Dashboard
-
-**Event Source**: Server
-
-**History**: Grading-related events were added on 14 Dec 2016.
-
-.. contents::
-  :local:
-  :depth: 1
-
-
-.. _edx_grades_course_grade_calculated:
-
-``edx.grades.course.grade_calculated``
-******************************************
-
-After a learner's updated subsection score is successfully saved to the
-database (which triggers an ``edx.grades.subsection.grade_calculated`` event),
-the learner's grade for the course is updated as a result. When a learner's
-updated grade for a course is successfully saved to the database, the server
-emits an ``edx.grades.course.grade_calculated`` event.
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-In addition to the :ref:`common<context>` ``context`` member fields, this
-event type also includes the following ``event`` member fields.
-
-.. list-table::
-   :widths: 15 15 60
-   :header-rows: 1
-
-   * - Field
-     - Type
-     - Details
-   * - ``course_edited_on``
-     - datetime
-     - The timestamp of the most recent edit to the course at the time the
-       grade was calculated.
-   * - ``course_version``
-     - string
-     - The version of the course for which the problem was submitted.
-   * - ``grading_policy_hash``
-     - string
-     - A hash of the grading policy at the time that the grade was calculated.
-       This field might be useful for identifying whether the course content
-       was the same for two grades.
-   * - ``letter_grade``
-     - string
-     - The string or alphabetical letter representing the learner's course
-       grade, as defined by the course's grading policy.
-   * - ``percent``
-     - float
-     - The learner's course grade, expressed as a percentage.
-   * - ``event_transaction_id``
-     - string
-     - The unique identifier for tracing transactional events back to learner
-       or instructor actions.
-   * - ``event_transaction_type``
-     - string
-     - A readable string representing the learner or course team action that
-       triggered this event. Possible values are
-       ``edx.grades.problem.submitted``, ``edx.grades.problem.rescored``,
-       ``edx.grades.problem.state_deleted``,
-       ``edx.grades.subsection.grade_calculated``, and
-       ``edx.grades.course.grade_calculated``.
-
-
-.. _edx_grades_problem_rescored:
-
-``edx.grades.problem.rescored``
-*********************************
-
-When a course team member successfully rescores a learner's problem
-submission, the server emits an ``edx.grades.problem.rescored`` event.
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-In addition to the :ref:`common<context>` ``context`` member fields, this
-event type also includes the following ``event`` member fields.
-
-.. list-table::
-   :widths: 15 15 60
-   :header-rows: 1
-
-   * - Field
-     - Type
-     - Details
-
-   * - ``instructor_id``
-     - string
-     - The identifier for the course team member who initiated the rescore.
-
-   * - ``new_weighted_earned``
-     - number
-     - The learner's weighted score for the problem, after the rescore.
-
-   * - ``new_weighted_possible``
-     - number
-     - The weighted maximum score for the problem, after the rescore.
-
-   * - ``only_if_higher``
-     - boolean
-     - Indicates whether the "rescore only if higher" option was selected when
-       the problem was rescored.
-
-   * - ``problem_id``
-     - string
-     - The identifier for the problem in the form of a serialized usage key.
-
-
-The ``edx.grades.problem.rescored`` event also includes the following
-``event`` member fields. These fields serve the same purpose for this event as
-they do for the :ref:`edx_grades_course_grade_calculated` event.
-
-* ``event_transaction_id``
-* ``event_transaction_type``
-
-.. _edx_grades_problem_score_overridden:
-
-``edx.grades.problem.score_overridden``
-***************************************
-
-When a course team member successfully overrides a learner's score for a
-problem, the server emits an ``edx.grades.problem.score_overridden`` event.
-
-**Event Source**: Server
-
-**History**: Added 19 Jul 2017.
-
-``event`` **Member Fields**:
-
-In addition to the :ref:`common<context>` ``context`` member fields, this event
-type also includes the following ``event`` member fields. These fields serve
-the same purpose for this event as they do for the
-:ref:`edx_grades_problem_rescored` event.
-
-* ``event_transaction_id``
-* ``event_transaction_type``
-* ``instructor_id``
-* ``new_weighted_earned``
-* ``new_weighted_possible``
-* ``only_if_higher``
-* ``problem_id``
-
-.. _edx_grades_problem_state_deleted:
-
-``edx.grades.problem.state_deleted``
-************************************
-
-When a course team member deletes the state for a learner's problem
-submission, the server emits an ``edx.grades.problem.state_deleted`` event.
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-In addition to the :ref:`common<context>` ``context`` member fields, this
-event type also includes the following ``event`` member fields. These fields
-serve the same purpose for this event as they do for the
-:ref:`edx_grades_problem_rescored` event.
-
-* ``instructor_id``
-* ``problem_id``
-* ``event_transaction_id``
-* ``event_transaction_type``
-
-
-.. _edx_grades_problem_submitted:
-
-``edx.grades.problem.submitted``
-*********************************
-
-When a learner's response to a problem is submitted and successfully saved,
-the server emits an ``edx.grades.problem.submitted`` event.
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-In addition to the :ref:`common<context>` ``context`` member fields, this
-event type also includes the following ``event`` member fields.
-
-.. list-table::
-   :widths: 15 15 60
-   :header-rows: 1
-
-   * - Field
-     - Type
-     - Details
-   * - ``weight``
-     - number
-     - The weight of this problem.
-   * - ``weighted_earned``
-     - number
-     - The learner's weighted score for this problem.
-   * - ``weighted_possible``
-     - number
-     - The weighted maximum possible score for this problem.
-
-The ``edx.grades.problem.submitted`` event also includes the following
-``event`` member fields. These fields serve the same purpose for this event as
-they do for the :ref:`edx_grades_course_grade_calculated` and
-:ref:`edx_grades_problem_rescored` events.
-
-* ``problem_id``
-* ``event_transaction_id``
-* ``event_transaction_type``
-
-
-.. _edx_grades_subsection_grade_calculated:
-
-``edx.grades.subsection.grade_calculated``
-******************************************
-
-After a learner has submitted a response to a problem (which triggers the
-``edx.grades.problem.submitted`` event), the score for the subsection that
-contains the problem is recalculated. When the updated subsection score is
-successfully saved to the database, the server emits an
-``edx.grades.subsection.grade_calculated`` event.
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-In addition to the :ref:`common<context>` ``context`` member fields, this
-event type also includes the following ``event`` member fields.
-
-.. list-table::
-   :widths: 15 15 60
-   :header-rows: 1
-
-   * - Field
-     - Type
-     - Details
-   * - ``block_id``
-     - string
-     - The identifier for the subsection, in the form of a serialized usage
-       key.
-   * - ``first_attempted``
-     - datetime
-     - The timestamp of the learner's first attempt at a problem in the
-       subsection.
-   * - ``subtree_edited_on``
-     - datetime
-     - The timestamp of the latest edit to the section of the course that
-       contains the graded subsection.
-   * - ``visible_blocks_hash``
-     - string
-     - A hash of the course content that was available to this learner at the
-       time that the grade was calculated. This field might be useful for
-       identifying whether the course content was the same for two grades.
-   * - ``weighted_graded_earned``
-     - number
-     - The total weighted points earned on all graded problems in the
-       subsection.
-   * - ``weighted_graded_possible``
-     - number
-     - The total weighted possible scores for all graded problems in the
-       subsection.
-   * - ``weighted_total_earned``
-     - number
-     - The total weighted score earned on all problems in the subsection.
-   * - ``weighted_total_possible``
-     - number
-     - The total weighted scores possible on all problems in the subsection.
-
-The ``edx.grades.subsection.grade_calculated`` event also includes the
-following ``event`` member fields. These fields serve the same purpose for
-this event as they do for the :ref:`edx_grades_course_grade_calculated` event.
-
-* ``course_version``
-* ``event_transaction_id``
-* ``event_transaction_type``
-
-
-.. _list_forum:
-
-======================================================
-List Discussion Team Events
-======================================================
-
-.. previously a comma-separated list; "Rows identical after the second column" (which means the name and description columns) were combined
-
-* ``list-forum-admins``
-
-* ``list-forum-community-TAs``
-
-* ``list-forum-mods``
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 40 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-   * - ``course``
-     - string
-
-.. _forum:
-
-======================================================
-Manage Discussion Team Events
-======================================================
-
-.. previously a comma-separated list; "Rows identical after the second column" (which means the name and description columns) were combined
-
-* ``add-forum-admin``
-
-* ``add-forum-community-TA``
-
-* ``add-forum-mod``
-
-* ``remove-forum-admin``
-
-* ``remove-forum-community-TA``
-
-* ``remove-forum-mod``
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 40 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-   * - ``course``
-     - string
-   * - ``username``
-     - string
-
-.. _histogram:
-
-======================================================
-``psychometrics-histogram-generation`` (Deprecated)
-======================================================
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Server
-
-**History**: The chart feature intended to emit these events was never enabled
-on the edX Edge or edx.org instructor dashboard.
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 40 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-   * - ``problem``
-     - string
-
-.. _user_group:
-
-======================================================
-``add-or-remove-user-group``
-======================================================
-
-**Component**: Instructor Dashboard
-
-**Event Source**: Server
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 40 40
-   :header-rows: 1
-
-   * - Field
-     - Type
-   * - ``event``
-     - string
-   * - ``event_name``
-     - string
-   * - ``user``
-     - string
-
-.. _instructor_enrollment:
-
-=============================
-Instructor Enrollment Events
-=============================
-
-In addition to the enrollment events that are generated when students enroll in
-or unenroll from a course, actions by course team members also generate
-enrollment events.
-
-* When a course author creates a course, his or her user account is enrolled in
-  the course and the server emits an ``edx.course.enrollment.activated`` event.
-
-* When a user with the Admin or Staff role enrolls in a course, the
-  server emits ``edx.course.enrollment.activated``. The server emits
-  ``edx.course.enrollment.deactivated`` events when these users unenroll from a
-  course.
-
-* When a user with the Admin or Staff role uses the **Batch Enrollment**
-  feature to enroll students or other course team members in a course, the
-  server emits an ``edx.course.enrollment.activated`` event for each
-  enrollment. When this feature is used to unenroll students from a course, the
-  server emits a ``edx.course.enrollment.deactivated`` for each unenrollment.
-
-  For events emitted as a result of a batch enrollment, the ``username`` and
-  ``context.user_id`` identify the course team member who made the change, and
-  the ``event.user_id`` identifies the student who was enrolled or unenrolled.
-
-The :ref:`student_courseaccessrole` table lists all users who have a privileged
-
-For details about the enrollment events, see :ref:`enrollment`.
-role for the course.
-
-.. _instructor_cohort_events:
-
-=============================
-Course Team Cohort Events
-=============================
-
-In addition to the cohort events that are generated when cohorts are created
-and users are assigned to them (see :ref:`student_cohort_events`), actions by
-course team members also generate cohort-related events.
-
-For more information about student cohorts, see
-:ref:`partnercoursestaff:Cohorts Overview` in the *Building and Running an edX
-Course* guide.
-
-``edx.cohort.creation_requested``
-*********************************
-
-When a course team member selects **Instructor** in the LMS to manually create
-a cohort, the server emits an ``edx.cohort.creation_requested`` event.
-
-**Event Source**: Server
-
-**History** Added 7 Oct 2014.
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 15 15 60
-   :header-rows: 1
-
-   * - Field
-     - Type
-     - Details
-   * - ``cohort_id``
-     - number
-     - The numeric ID of the cohort.
-   * - ``cohort_name``
-     - string
-     - The display name of the cohort.
-
-``edx.cohort.user_add_requested``
-*********************************
-
-When a course team member adds a student to a cohort on the
-instructor dashboard, the server emits an ``edx.cohort.user_add_requested``
-event. Course team members can add students to a cohort individually, or by
-uploading a .csv file of student cohort assignments.
-
-**Event Source**: Server
-
-**History** Added 7 Oct 2014.
-
-``event`` **Member Fields**:
-
-.. list-table::
-   :widths: 15 15 60
-   :header-rows: 1
-
-   * - Field
-     - Type
-     - Details
-   * - ``cohort_id``
-     - number
-     - The numeric ID of the cohort.
-   * - ``cohort_name``
-     - string
-     - The display name of the cohort.
-   * - ``previous_cohort_id``
-     - number
-     - The numeric ID of the cohort that the user was previously assigned to.
-
-       Null if the user was not previously assigned to a cohort.
-
-   * - ``previous_cohort_name``
-     - string
-     - The display name of the cohort that the user was previously assigned to.
-
-       Null if the user was not previously assigned to a cohort.
-
-   * - ``user_id``
-     - number
-     - The numeric ID (from ``auth_user.id``) of the added user.
-
-.. Including the special exam (timed and proctored) developmnent events doc in
-.. a separate file because it is very long.
-
-.. include:: special_exam_development_events.rst
-
-
-.. include:: ../../../links/links.rst
+.. include:: ../../../../links/links.rst
