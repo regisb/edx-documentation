@@ -2624,6 +2624,7 @@ submitted the response to the problem is identified in the ``student`` field.
    * - ``task_id``
      - string
      -
+
 ===============================================
 ``problem_rescore_fail``
 ===============================================
@@ -2954,9 +2955,9 @@ This section includes descriptions of the following events.
 
 .. _special_exam_attempt_created:
 
-=================================================================================================================================
+====================================================================================================================================================================
 ``edx.special_exam.proctored.attempt.created``, ``edx.special_exam.practice.attempt.created``, and ``edx.special_exam.timed.attempt.created``
-=================================================================================================================================
+====================================================================================================================================================================
 
 The server emits this event when a learner chooses to take a special exam.
 
@@ -3230,9 +3231,9 @@ information, see
 
 .. _special_exam_attempt_submitted:
 
-=============================================================================================================================================
+========================================================================================================================================================================
 ``edx.special_exam.proctored.attempt.submitted``, ``edx.special_exam.practice.attempt.submitted``, and ``edx.special_exam.timed.attempt.submitted``
-=============================================================================================================================================
+========================================================================================================================================================================
 
 The server emits this event when a learner completes a proctored exam and
 submits it for grading and review.
@@ -6351,7 +6352,7 @@ The following additional ``event`` member fields apply specifically to
      - string
      - The URL of the web site where the certificate evidence link was
        selected. This URL is the same as the URI in the ``context.referer``
-       field. For details, see `referer field`_.
+       field. For details, see :ref:`referer_field`.
 
 
 .. _ora:

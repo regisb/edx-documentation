@@ -207,6 +207,8 @@ emitted.
 For video events that originate on mobile devices, identifies the URL for the
 video component.
 
+.. _referer_field:
+
 ===================
 ``referer`` Field
 ===================
